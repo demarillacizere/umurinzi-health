@@ -4,22 +4,21 @@ from datetime import date, datetime, time
 from django.contrib.gis.gdal.base import GDALBase
 from django.contrib.gis.gdal.error import GDALException
 from django.contrib.gis.gdal.prototypes import ds as capi
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 
 
 # For more information, see the OGR C API source code:
-#  http://www.gdal.org/ogr__api_8h.html
+#  https://www.gdal.org/ogr__api_8h.html
 #
 # The OGR_Fld_* routines are relevant here.
 class Field(GDALBase):
     """
-    This class wraps an OGR Field, and needs to be instantiated
-    from a Feature object.
+    Wrap an OGR Field. Needs to be instantiated from a Feature object.
     """
 
     def __init__(self, feat, index):
         """
-        Initializes on the feature object and the integer index of
+        Initialize on the feature object and the integer index of
         the field within the feature.
         """
         # Setting the feature pointer and index.
@@ -35,34 +34,33 @@ class Field(GDALBase):
         # Setting the class depending upon the OGR Field Type (OFT)
         self.__class__ = OGRFieldTypes[self.type]
 
-        # OFTReal with no precision should be an OFTInteger.
-        if isinstance(self, OFTReal) and self.precision == 0:
-            self.__class__ = OFTInteger
-            self._double = True
-
     def __str__(self):
-        "Returns the string representation of the Field."
+        "Return the string representation of the Field."
         return str(self.value).strip()
 
     # #### Field Methods ####
     def as_double(self):
-        "Retrieves the Field's value as a double (float)."
-        return capi.get_field_as_double(self._feat.ptr, self._index)
+        "Retrieve the Field's value as a double (float)."
+        return capi.get_field_as_double(self._feat.ptr, self._index) if self.is_set else None
 
     def as_int(self, is_64=False):
-        "Retrieves the Field's value as an integer."
+        "Retrieve the Field's value as an integer."
         if is_64:
-            return capi.get_field_as_integer64(self._feat.ptr, self._index)
+            return capi.get_field_as_integer64(self._feat.ptr, self._index) if self.is_set else None
         else:
-            return capi.get_field_as_integer(self._feat.ptr, self._index)
+            return capi.get_field_as_integer(self._feat.ptr, self._index) if self.is_set else None
 
     def as_string(self):
-        "Retrieves the Field's value as a string."
+        "Retrieve the Field's value as a string."
+        if not self.is_set:
+            return None
         string = capi.get_field_as_string(self._feat.ptr, self._index)
-        return force_text(string, encoding=self._feat.encoding, strings_only=True)
+        return force_str(string, encoding=self._feat.encoding, strings_only=True)
 
     def as_datetime(self):
-        "Retrieves the Field's value as a tuple of date & time components."
+        "Retrieve the Field's value as a tuple of date & time components."
+        if not self.is_set:
+            return None
         yy, mm, dd, hh, mn, ss, tz = [c_int() for i in range(7)]
         status = capi.get_field_as_datetime(
             self._feat.ptr, self._index, byref(yy), byref(mm), byref(dd),
@@ -74,19 +72,24 @@ class Field(GDALBase):
 
     # #### Field Properties ####
     @property
+    def is_set(self):
+        "Return True if the value of this field isn't null, False otherwise."
+        return capi.is_field_set(self._feat.ptr, self._index)
+
+    @property
     def name(self):
-        "Returns the name of this Field."
+        "Return the name of this Field."
         name = capi.get_field_name(self.ptr)
-        return force_text(name, encoding=self._feat.encoding, strings_only=True)
+        return force_str(name, encoding=self._feat.encoding, strings_only=True)
 
     @property
     def precision(self):
-        "Returns the precision of this Field."
+        "Return the precision of this Field."
         return capi.get_field_precision(self.ptr)
 
     @property
     def type(self):
-        "Returns the OGR type of this Field."
+        "Return the OGR type of this Field."
         return capi.get_field_type(self.ptr)
 
     @property
@@ -96,30 +99,24 @@ class Field(GDALBase):
 
     @property
     def value(self):
-        "Returns the value of this Field."
+        "Return the value of this Field."
         # Default is to get the field as a string.
         return self.as_string()
 
     @property
     def width(self):
-        "Returns the width of this Field."
+        "Return the width of this Field."
         return capi.get_field_width(self.ptr)
 
 
 # ### The Field sub-classes for each OGR Field type. ###
 class OFTInteger(Field):
-    _double = False
     _bit64 = False
 
     @property
     def value(self):
-        "Returns an integer contained in this field."
-        if self._double:
-            # If this is really from an OFTReal field with no precision,
-            # read as a double and cast as Python int (to prevent overflow).
-            return int(self.as_double())
-        else:
-            return self.as_int(self._bit64)
+        "Return an integer contained in this field."
+        return self.as_int(self._bit64)
 
     @property
     def type(self):
@@ -134,7 +131,7 @@ class OFTInteger(Field):
 class OFTReal(Field):
     @property
     def value(self):
-        "Returns a float contained in this field."
+        "Return a float contained in this field."
         return self.as_double()
 
 
@@ -155,33 +152,33 @@ class OFTBinary(Field):
 class OFTDate(Field):
     @property
     def value(self):
-        "Returns a Python `date` object for the OFTDate field."
+        "Return a Python `date` object for the OFTDate field."
         try:
             yy, mm, dd, hh, mn, ss, tz = self.as_datetime()
             return date(yy.value, mm.value, dd.value)
-        except (ValueError, GDALException):
+        except (TypeError, ValueError, GDALException):
             return None
 
 
 class OFTDateTime(Field):
     @property
     def value(self):
-        "Returns a Python `datetime` object for this OFTDateTime field."
+        "Return a Python `datetime` object for this OFTDateTime field."
         # TODO: Adapt timezone information.
-        #  See http://lists.osgeo.org/pipermail/gdal-dev/2006-February/007990.html
+        #  See https://lists.osgeo.org/pipermail/gdal-dev/2006-February/007990.html
         #  The `tz` variable has values of: 0=unknown, 1=localtime (ambiguous),
         #  100=GMT, 104=GMT+1, 80=GMT-5, etc.
         try:
             yy, mm, dd, hh, mn, ss, tz = self.as_datetime()
             return datetime(yy.value, mm.value, dd.value, hh.value, mn.value, ss.value)
-        except (ValueError, GDALException):
+        except (TypeError, ValueError, GDALException):
             return None
 
 
 class OFTTime(Field):
     @property
     def value(self):
-        "Returns a Python `time` object for this OFTTime field."
+        "Return a Python `time` object for this OFTTime field."
         try:
             yy, mm, dd, hh, mn, ss, tz = self.as_datetime()
             return time(hh.value, mn.value, ss.value)

@@ -1,5 +1,5 @@
 from django.apps import apps
-from django.contrib.gis.db.models.fields import GeometryField
+from django.contrib.gis.db.models import GeometryField
 from django.contrib.sitemaps import Sitemap
 from django.db import models
 from django.urls import reverse
@@ -18,9 +18,9 @@ class KMLSitemap(Sitemap):
 
     def _build_kml_sources(self, sources):
         """
-        Goes through the given sources and returns a 3-tuple of
-        the application label, module name, and field name of every
-        GeometryField encountered in the sources.
+        Go through the given sources and return a 3-tuple of the application
+        label, module name, and field name of every GeometryField encountered
+        in the sources.
 
         If no sources are provided, then all models.
         """

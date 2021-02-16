@@ -2,7 +2,6 @@ from cx_Oracle import CLOB
 
 from django.contrib.gis.db.backends.base.adapter import WKTAdapter
 from django.contrib.gis.geos import GeometryCollection, Polygon
-from django.utils.six.moves import range
 
 
 class OracleSpatialAdapter(WKTAdapter):
@@ -25,30 +24,23 @@ class OracleSpatialAdapter(WKTAdapter):
         self.srid = geom.srid
 
     def _fix_polygon(self, poly):
-        # Fix single polygon orientation as described in __init__()
-        if self._isClockwise(poly.exterior_ring):
+        """Fix single polygon orientation as described in __init__()."""
+        if poly.empty:
+            return poly
+        if not poly.exterior_ring.is_counterclockwise:
             poly.exterior_ring = list(reversed(poly.exterior_ring))
 
         for i in range(1, len(poly)):
-            if not self._isClockwise(poly[i]):
+            if poly[i].is_counterclockwise:
                 poly[i] = list(reversed(poly[i]))
 
         return poly
 
     def _fix_geometry_collection(self, coll):
-        # Fix polygon orientations in geometry collections as described in
-        # __init__()
+        """
+        Fix polygon orientations in geometry collections as described in
+        __init__().
+        """
         for i, geom in enumerate(coll):
             if isinstance(geom, Polygon):
                 coll[i] = self._fix_polygon(geom)
-
-    def _isClockwise(self, coords):
-        # A modified shoelace algorithm to determine polygon orientation.
-        # See https://en.wikipedia.org/wiki/Shoelace_formula
-        n = len(coords)
-        area = 0.0
-        for i in range(n):
-            j = (i + 1) % n
-            area += coords[i][0] * coords[j][1]
-            area -= coords[j][0] * coords[i][1]
-        return area < 0.0

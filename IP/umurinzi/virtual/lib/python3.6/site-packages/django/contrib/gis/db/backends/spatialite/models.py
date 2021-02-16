@@ -3,10 +3,8 @@
 """
 from django.contrib.gis.db.backends.base.models import SpatialRefSysMixin
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 
 
-@python_2_unicode_compatible
 class SpatialiteGeometryColumns(models.Model):
     """
     The 'geometry_columns' table from SpatiaLite.
@@ -23,10 +21,19 @@ class SpatialiteGeometryColumns(models.Model):
         db_table = 'geometry_columns'
         managed = False
 
+    def __str__(self):
+        return '%s.%s - %dD %s field (SRID: %d)' % (
+            self.f_table_name,
+            self.f_geometry_column,
+            self.coord_dimension,
+            self.type,
+            self.srid,
+        )
+
     @classmethod
     def table_name_col(cls):
         """
-        Returns the name of the metadata column used to store the feature table
+        Return the name of the metadata column used to store the feature table
         name.
         """
         return 'f_table_name'
@@ -34,15 +41,10 @@ class SpatialiteGeometryColumns(models.Model):
     @classmethod
     def geom_col_name(cls):
         """
-        Returns the name of the metadata column used to store the feature
+        Return the name of the metadata column used to store the feature
         geometry column.
         """
         return 'f_geometry_column'
-
-    def __str__(self):
-        return "%s.%s - %dD %s field (SRID: %d)" % \
-               (self.f_table_name, self.f_geometry_column,
-                self.coord_dimension, self.type, self.srid)
 
 
 class SpatialiteSpatialRefSys(models.Model, SpatialRefSysMixin):
@@ -56,11 +58,11 @@ class SpatialiteSpatialRefSys(models.Model, SpatialRefSysMixin):
     proj4text = models.CharField(max_length=2048)
     srtext = models.CharField(max_length=2048)
 
-    @property
-    def wkt(self):
-        return self.srtext
-
     class Meta:
         app_label = 'gis'
         db_table = 'spatial_ref_sys'
         managed = False
+
+    @property
+    def wkt(self):
+        return self.srtext

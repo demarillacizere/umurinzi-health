@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.db import migrations, models
 
 
@@ -21,8 +18,8 @@ class Migration(migrations.Migration):
                 ('enable_comments', models.BooleanField(default=False, verbose_name='enable comments')),
                 ('template_name', models.CharField(
                     help_text=(
-                        "Example: 'flatpages/contact_page.html'. If this isn't provided, the system will use "
-                        "'flatpages/default.html'."
+                        'Example: “flatpages/contact_page.html”. If this isn’t provided, the system will use '
+                        '“flatpages/default.html”.'
                     ), max_length=70, verbose_name='template name', blank=True
                 )),
                 ('registration_required', models.BooleanField(
@@ -32,7 +29,7 @@ class Migration(migrations.Migration):
                 ('sites', models.ManyToManyField(to='sites.Site', verbose_name='sites')),
             ],
             options={
-                'ordering': ('url',),
+                'ordering': ['url'],
                 'db_table': 'django_flatpage',
                 'verbose_name': 'flat page',
                 'verbose_name_plural': 'flat pages',
