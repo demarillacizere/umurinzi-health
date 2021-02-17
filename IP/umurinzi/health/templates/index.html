@@ -4,7 +4,89 @@
 {% load bootstrap4 %}
 {{block.super}}
 
-<div class='container'>
+<!-- <div class='container'>
 <h3>Hello...</h3>
+</div> -->
+
+<div class="banner">
+    <div class="cover">
+        <div class="container image">
+            <div class='col-md-3'></div>
+            <div class='col-md-6'>
+            <h2 id="category"><b>UMURINZI HEALTH</b></h2><br>
+            <form class="form" role="search" action="#" >
+                  <input type="text" class="form-control" style='z-index:1;' placeholder="Search by category" name="image_category">
+              </form>
+              <small><b>Trending searches: fashion, travel</b></small><br><br><br>
+            <a class='btn' href="#gallery">DRUGS</a>
+        </div>
+    </div></div>
+</div><br><br>
+
+
+ <div class="container">
+    <div class="row" id='gallery'>
+    {% for image in images %}
+         <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+                 <div class="portfolio-wrap ">
+                     <div class="portfolio-wrap hovereffect">
+                         <a class="img-overlay" data-toggle="modal" data-target="#{{image.id}}" style="width:100%">
+                             <img src="{{image.image.url}}" width='100%' href="" class="image" alt="Image" >
+                             <div class="overlay">
+                                 <h4>{{image.image_name}}</h4>
+                             </div>
+                         </a>
+                     </div>
+                 </div>
+             </div>
+             {% empty %}
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <img src="{% static 'images/sorry.png' %}" alt="" class="oops">
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <h2 class="text-center"> Sorry no images yet.</h2>
+        </div>
+    </div>
+    {% endfor %}
+    
+    <!-- Image details modal -->
+    {% for image in images %}
+        <div class="modal fade" id="{{image.id}}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">{{image.image_name|title}}</h5>
+                        <small><i class="fas fa-map-marker-alt"></i><span> {{image.image_location}}</span></small>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                                <div><img id="img{{image.id}}" src="{{image.image.url}}" class="img-thumbnail" alt="Image" width='100%'></div><br>
+                                <p class="desc">{{image.image_description}}</p>
+                                <p>Category: {{image.image_category.name}}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" value="http://picnav.herokuapp.com{{ image.image.url }}" onclick="copyURL(this.value)">Copy link</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
 </div>
+
+<script>
+    function copyURL(value){
+      function handler(event){
+        event.clipboardData.setData('text/plain',value);
+        event.preventDefault();
+        document.removeEventListener('copy',handler, true);
+      }
+      document.addEventListener('copy', handler, true);
+      document.execCommand('copy');
+    }
+    </script>
 {%endblock%}
