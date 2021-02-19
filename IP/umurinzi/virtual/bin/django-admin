@@ -1,4 +1,4 @@
-#!/home/dema/IP/umurinzi/virtual/bin/python
+#!/home/wecode/Documents/umurinzi-health/IP/umurinzi/virtual/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

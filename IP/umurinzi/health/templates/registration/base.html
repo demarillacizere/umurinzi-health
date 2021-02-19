@@ -1,0 +1,30 @@
+{% load bootstrap4 %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="HandheldFriendly" content="true">
+  {%if title%}
+  <title>{{title}}</title>
+  {%endif%}
+  {% block styles %}
+  
+    {% bootstrap_css %}
+     <script src="https://kit.fontawesome.com/83d474e45f.js" crossorigin="anonymous"></script>
+    
+<link href="https://fonts.googleapis.com/css2?family=Lancelot&display=swap" rel="stylesheet">
+
+   
+  {% endblock %}
+</head>
+<body>
+  {% block content %}  {%endblock%}
+  {% block scripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    {% bootstrap_javascript %}
+  {% endblock %}
+</body>
+</html>

@@ -1,28 +1,30 @@
+import copy
+
 from django.core.exceptions import ValidationError
 from django.core.validators import (
     MaxLengthValidator, MaxValueValidator, MinLengthValidator,
     MinValueValidator,
 )
 from django.utils.deconstruct import deconstructible
-from django.utils.translation import gettext_lazy as _, ngettext_lazy
+from django.utils.translation import ugettext_lazy as _, ungettext_lazy
 
 
 class ArrayMaxLengthValidator(MaxLengthValidator):
-    message = ngettext_lazy(
+    message = ungettext_lazy(
         'List contains %(show_value)d item, it should contain no more than %(limit_value)d.',
         'List contains %(show_value)d items, it should contain no more than %(limit_value)d.',
         'limit_value')
 
 
 class ArrayMinLengthValidator(MinLengthValidator):
-    message = ngettext_lazy(
+    message = ungettext_lazy(
         'List contains %(show_value)d item, it should contain no fewer than %(limit_value)d.',
         'List contains %(show_value)d items, it should contain no fewer than %(limit_value)d.',
         'limit_value')
 
 
 @deconstructible
-class KeysValidator:
+class KeysValidator(object):
     """A validator designed for HStore to require/restrict keys."""
 
     messages = {
@@ -35,10 +37,11 @@ class KeysValidator:
         self.keys = set(keys)
         self.strict = strict
         if messages is not None:
-            self.messages = {**self.messages, **messages}
+            self.messages = copy.copy(self.messages)
+            self.messages.update(messages)
 
     def __call__(self, value):
-        keys = set(value)
+        keys = set(value.keys())
         missing_keys = self.keys - keys
         if missing_keys:
             raise ValidationError(
@@ -63,14 +66,17 @@ class KeysValidator:
             self.strict == other.strict
         )
 
+    def __ne__(self, other):
+        return not (self == other)
+
 
 class RangeMaxValueValidator(MaxValueValidator):
     def compare(self, a, b):
-        return a.upper is None or a.upper > b
+        return a.upper > b
     message = _('Ensure that this range is completely less than or equal to %(limit_value)s.')
 
 
 class RangeMinValueValidator(MinValueValidator):
     def compare(self, a, b):
-        return a.lower is None or a.lower < b
+        return a.lower < b
     message = _('Ensure that this range is completely greater than or equal to %(limit_value)s.')

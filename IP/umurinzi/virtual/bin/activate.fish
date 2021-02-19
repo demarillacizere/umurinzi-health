@@ -29,7 +29,7 @@ end
 # unset irrelevant variables
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/home/dema/IP/umurinzi/virtual"
+set -gx VIRTUAL_ENV "/home/wecode/Documents/umurinzi-health/IP/umurinzi/virtual"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH
