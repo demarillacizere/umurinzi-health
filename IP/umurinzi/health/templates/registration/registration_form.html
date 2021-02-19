@@ -1,0 +1,38 @@
+%extends "registration/base.html"%}
+{% load bootstrap4 %}
+{% block content %}
+<div class="container-fluid"
+  style="background-image:linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),url('https://cdn.shopify.com/s/files/1/0017/3932/5501/products/basket_ruhondo1_900x.jpg?v=1600845583') ;background-repeat:no-repeat;background-size:cover;height:122vh;color:white;margin-top:-1;background-position: center;font-family: 'Lancelot', cursive;">
+
+  <div class="row">
+
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <div class="panel panel-default" style="margin-top: 15%">
+        <div class="panel-heading">
+          <h2 class="text-center" style="color:white;margin-top:5%;">Create an account<i class="fas fa-user-plus"></i>
+          </h2>
+        </div>
+        <div class="panel-body">
+          {% if form.errors %}
+          <p> Some Information are Incorrect </p>
+          {% endif %}
+          <p>If you have account!<a id="sign" href="/accounts/login/">Login</a></p>
+
+
+          <form action="/accounts/register/" method="post">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <div class="form-group">
+              <input type="submit" class="btn btn-outline-info btn-sm" value="Sign Up">
+            </div>
+            <input type="hidden" name="next" value="{{next}}">
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+</div>
+
+{% endblock %}
