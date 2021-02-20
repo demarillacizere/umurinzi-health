@@ -1,0 +1,73 @@
+{%extends 'base.html'%}
+{% load static%}
+{% block content %}
+
+{{block.super}}
+<style>
+    body{
+        background-color:rgb(226, 221, 221);
+    }
+</style>
+<!-- Landing Page -->
+<div class='container' style='margin-top:80px;'>
+    <h2><b>{{search_term|title}}</b></h2>
+    <small>Found {{ images|length}} images</small><hr><br>
+</div>
+
+
+<div class="container wrap">
+    <!-- Looping through images -->
+    <div class="row">
+    {% for image in images %}
+        <!-- displaying images -->
+         <div class="col-xs-6 col-sm-6  col-md-4 col-lg-3">
+                 <div class="portfolio-wrap ">
+                     <div class="portfolio-wrap hovereffect">
+                         <a class="img-overlay" data-toggle="modal" data-target="#{{image.id}}" style="width:100%">
+                             <img src="{{image.image.url}}" width='100%' href="" class="image" alt="Image" >
+                             <div class="overlay">
+                                 <h4>{{image.image_name}}</h4>
+                             </div>
+                         </a>
+                     </div>
+                 </div>
+             </div>
+    {% empty %}
+        <div class="col-sm-6 col-md-6 col-lg-6 no-result">
+            <img src="https://unsplash.com/a/img/empty-states/photos.png" width='100%' alt="">
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <h4 class="text-center"> Sorry, no drugs found for <b>{{search_term}}</b> category</h4>
+        </div>
+    {% endfor %}
+    </div>
+    
+
+    <!-- looping through image details modal class -->
+    {% for image in images %}
+        <div class="modal fade" id="{{image.id}}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">{{image.image_name|title}}</h5>
+                        <small><i class="fas fa-map-marker-alt"></i><span> {{image.image_location}}</span></small>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                                <div><img id="img{{image.id}}" src="{{image.image.url}}" class="img-thumbnail" alt="Image" width='100%'></div><br>
+                                <p class="desc">{{image.image_description}}</p>
+                                <p>Category: {{image.image_category.name}}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" value="http://picnav.herokuapp.com{{ image.image.url }}" onclick="copyURL(this.value)">Copy link</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
