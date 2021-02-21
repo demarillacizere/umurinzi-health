@@ -27,3 +27,23 @@ def registration(request):
         'form':form,
     }
     return render(request, 'registration/registration_form.html', context)
+
+def search_results(request):
+
+    if 'drug' in request.GET and request.GET["drug"]:
+        search_term = request.GET.get("drug")
+        searched_drugs = Drug.search(search_term)
+        print(search_term)
+        message = f"{search_term}"
+
+        return render(request, 'search.html',{"message":message,"drugs": searched_drugs})
+
+    else:
+        message = "You haven't searched for any term"
+        return render(request, 'search.html',{"message":message})
+
+@login_required(login_url='/accounts/login/') 
+def get_details(request,drugs_id):
+    drug = Drug.objects.get(id=drugs_id)
+    pharmacies = drug.pharmacy.all()
+    return render(request,"details.html",{"drug":drug, "pharmacies":pharmacies})
