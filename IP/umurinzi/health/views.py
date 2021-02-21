@@ -10,7 +10,7 @@ from django.contrib.auth import authenticate,login,logout
 #from .email import send_welcome_email
 
 
-@login_required(login_url='login')
+@login_required(login_url='/accounts/login/')
 def index(request):
     return render(request,'index.html')
 
