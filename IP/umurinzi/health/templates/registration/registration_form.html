@@ -1,35 +1,43 @@
-%extends "registration/base.html"%}
+{%extends "registration/base.html"%}
 {% load bootstrap4 %}
 {% block content %}
-<div class="container-fluid"
-  style="background-image:linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),url('https://cdn.shopify.com/s/files/1/0017/3932/5501/products/basket_ruhondo1_900x.jpg?v=1600845583') ;background-repeat:no-repeat;background-size:cover;height:122vh;color:white;margin-top:-1;background-position: center;font-family: 'Lancelot', cursive;">
+{% load static %}
 
+
+<div class="container"><br>
   <div class="row">
 
-    <div class="col-md-4"></div>
+    <div class="col-md-6">
+        <img src="{% static 'images/health app.png' %}" width="500" height="500" >
+
+    </div>
     <div class="col-md-4">
-      <div class="panel panel-default" style="margin-top: 15%">
+      {% if form.errors %}
+        <p> Some Information Might be Incorrect </p>
+      {% endif %}
+      <div class="panel-default">
         <div class="panel-heading">
-          <h2 class="text-center" style="color:white;margin-top:5%;">Create an account<i class="fas fa-user-plus"></i>
-          </h2>
+          <h1 class="text-center" style='color:blue;'><b>Sign Up</b></h1>
         </div>
         <div class="panel-body">
-          {% if form.errors %}
-          <p> Some Information are Incorrect </p>
-          {% endif %}
-          <p>If you have account!<a id="sign" href="/accounts/login/">Login</a></p>
 
-
-          <form action="/accounts/register/" method="post">
+          <form action="/accounts/register/"  method="POST">
             {% csrf_token %}
             {% bootstrap_form form %}
             <div class="form-group">
-              <input type="submit" class="btn btn-outline-info btn-sm" value="Sign Up">
+              <input type="submit" class="btn btn-primary btn-lg" value="SignUp">
             </div>
-            <input type="hidden" name="next" value="{{next}}">
+
+            <input type="hidden" name="newprofile" value="newprofile">
+
           </form>
+              <div class="border-bottom pt-3">
+                <p class="text-muted">Already have an account?<a class="ml-2 text-info" href="{% url 'login' %}">SignIn</a></p>
+              </div>
         </div>
+
       </div>
+
     </div>
     <div class="col-md-4"></div>
   </div>

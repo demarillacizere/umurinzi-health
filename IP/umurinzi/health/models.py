@@ -27,7 +27,7 @@ class Pharmacy(models.Model):
 class Drug(models.Model):
     name=models.CharField(max_length=30)
     description = models.CharField(max_length=250)
-    price = models.PositiveIntegerField()
+    # price = models.PositiveIntegerField()
     pic=models.ImageField(upload_to='pictures/')
     pharmacy=models.ForeignKey(Pharmacy, on_delete=models.CASCADE, null=True)
 
