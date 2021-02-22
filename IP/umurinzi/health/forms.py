@@ -10,3 +10,8 @@ class RegisterForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2']
 
+class LocationForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        exclude = ['user', 'first_name','last_name','email','profile_pic']
+        location=  forms.ModelChoiceField(queryset=Location.objects.all())

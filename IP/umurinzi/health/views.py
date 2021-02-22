@@ -12,7 +12,12 @@ from django.contrib.auth import authenticate,login,logout
 
 @login_required(login_url='/accounts/login/')
 def index(request):
-    return render(request,'index.html')
+    profile = Profile.objects.get(user=request.user)
+    locations = Location.objects.all()
+    context = {
+        'locations':locations,
+    }
+    return render(request,'index.html',context)
 
 def registration(request):
     if request.method == 'POST':
@@ -20,6 +25,7 @@ def registration(request):
         if form.is_valid():
             username = form.cleaned_data.get('username')
             form.save()
+            profile=Profile.objects.create(user=user,email=email)
             return redirect('login')
     else:
         form = RegisterForm()
@@ -29,14 +35,17 @@ def registration(request):
     return render(request, 'registration/registration_form.html', context)
 
 def search_results(request):
-
+    profile = Profile.objects.get(user=request.user)
     if 'drug' in request.GET and request.GET["drug"]:
         search_term = request.GET.get("drug")
         searched_drugs = Drug.search(search_term)
-        print(search_term)
         message = f"{search_term}"
-
-        return render(request, 'search.html',{"message":message,"drugs": searched_drugs})
+        if 'location' in request.GET and request.GET["location"]:
+            loc = request.GET.get("location")
+            location = Location.objects.get(name=loc)
+            profile.location=location
+            profile.save()
+        return render(request, 'search.html',{"message":message,"drugs": searched_drugs,})
 
     else:
         message = "You haven't searched for any term"
@@ -44,6 +53,14 @@ def search_results(request):
 
 @login_required(login_url='/accounts/login/') 
 def get_details(request,drugs_id):
+    profile = Profile.objects.get(user=request.user)
+    location = profile.location
     drug = Drug.objects.get(id=drugs_id)
     pharmacies = drug.pharmacy.all()
-    return render(request,"details.html",{"drug":drug, "pharmacies":pharmacies})
+    nearest = pharmacies.filter(location=location).all()
+    others=[]
+    for pharm in pharmacies:
+        if pharm.location != location.name:
+            others.append(pharm)
+    
+    return render(request,"details.html",{"drug":drug, "pharmacies":pharmacies,"nearest":nearest,"others":others,})
