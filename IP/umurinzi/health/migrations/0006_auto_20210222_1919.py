@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='pharmacy',
             name='located_at',
-            field=models.OneToOneField(default='timezone.now',on_delete=django.db.models.deletion.CASCADE, to='health.location'),
+            field=models.OneToOneField(default='1',on_delete=django.db.models.deletion.CASCADE, to='health.location'),
         ),
         migrations.AlterField(
             model_name='profile',

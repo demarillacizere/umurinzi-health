@@ -31,13 +31,22 @@
                 <th>Contact</th>
                 <th>Directions</th>
             </tr>
-            {% for pharmacy in pharmacies %}
+            {% for pharmacy in nearest %}
             <tr>
                 <td><a href="/pharmacy/{{pharmacy.id}}" style='text-decoration: none; color:black'>{{pharmacy.name}}</a></th>
-                <td>{{pharmacy.residence}}</td>
+                <td>{{pharmacy.location}}</td>
                 <td>{{pharmacy.insurance}}</td>
                 <td>{{pharmacy.contact}}</td>
-                <td><a href='{{pharmacy.location}}' target='_blank'>View on Google Map</a></td>
+                <td><a href='{{pharmacy.direction}}' target='_blank'>View on Google Map</a></td>
+            </tr>
+            {% endfor%}
+            {% for pharmacy in others %}
+            <tr>
+                <td><a href="/pharmacy/{{pharmacy.id}}" style='text-decoration: none; color:black'>{{pharmacy.name}}</a></th>
+                <td>{{pharmacy.location}}</td>
+                <td>{{pharmacy.insurance}}</td>
+                <td>{{pharmacy.contact}}</td>
+                <td><a href='{{pharmacy.direction}}' target='_blank'>View on Google Map</a></td>
             </tr>
             {% endfor%}
         </tbody>

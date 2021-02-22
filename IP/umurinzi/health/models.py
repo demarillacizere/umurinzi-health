@@ -10,7 +10,7 @@ class Location(models.Model):
         return self.name
 class Pharmacy(models.Model):
     name=models.CharField(max_length=100)
-    location = models.OneToOneField(Location, on_delete=models.CASCADE, default='1')
+    location = models.OneToOneField(Location, on_delete=models.CASCADE)
     direction = models.CharField(max_length=255)
     contact = models.PositiveIntegerField()
 

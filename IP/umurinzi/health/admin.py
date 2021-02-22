@@ -3,4 +3,5 @@ from .models import *
 
 admin.site.register(Pharmacy)
 admin.site.register(Drug)
-
+admin.site.register(Location)
+admin.site.register(Profile)
