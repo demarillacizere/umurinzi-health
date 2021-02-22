@@ -20,6 +20,7 @@ def registration(request):
         if form.is_valid():
             username = form.cleaned_data.get('username')
             form.save()
+            profile=Profile.objects.create(user=user,email=email)
             return redirect('login')
     else:
         form = RegisterForm()
