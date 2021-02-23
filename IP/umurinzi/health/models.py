@@ -8,9 +8,16 @@ class Location(models.Model):
 
     def __str__(self):
         return self.name
+
+class Insurance(models.Model):
+    name=models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
 class Pharmacy(models.Model):
     name=models.CharField(max_length=100)
     location = models.OneToOneField(Location, on_delete=models.CASCADE)
+    insurance = models.ManyToManyField(Insurance)
     direction = models.CharField(max_length=255)
     contact = models.PositiveIntegerField()
 
@@ -72,7 +79,7 @@ class Profile(models.Model):
     first_name=models.CharField(max_length=30)
     last_name=models.CharField(max_length=30)
     email=models.EmailField()
-    location= models.OneToOneField(Location, on_delete=models.CASCADE, default='1')
+    location = models.OneToOneField(Location, on_delete=models.CASCADE, null=True)
 
     def save_profile(self):
         self.save()
@@ -81,4 +88,4 @@ class Profile(models.Model):
         self.delete()
 
     def __str__(self):
-        return self.first_name
+        return self.user.username
