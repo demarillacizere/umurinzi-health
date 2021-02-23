@@ -23,9 +23,8 @@ def registration(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('username')
-            form.save()
-            profile=Profile.objects.create(user=user,email=email)
+            new_user = form.save()
+            profile=Profile.objects.create(user=new_user,email=new_user)
             return redirect('login')
     else:
         form = RegisterForm()
@@ -43,8 +42,9 @@ def search_results(request):
         if 'location' in request.GET and request.GET["location"]:
             loc = request.GET.get("location")
             location = Location.objects.get(name=loc)
-            profile.location=location
-            profile.save()
+            if profile.location != location:  
+                profile.location=location
+                profile.save()
         return render(request, 'search.html',{"message":message,"drugs": searched_drugs,})
 
     else:
