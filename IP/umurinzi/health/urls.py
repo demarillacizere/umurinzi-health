@@ -11,6 +11,7 @@ urlpatterns = [
     url('accounts/login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     url('^search/', views.search_results, name='search_results'),
     url('drug/(\d+)',views.get_details,name='get_details'),
+    url('about',views.about_us,name='about'),
    
 ]
 if settings.DEBUG:
