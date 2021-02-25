@@ -12,6 +12,7 @@ urlpatterns = [
     url('^search/', views.search_results, name='search_results'),
     url('drug/(\d+)',views.get_details,name='get_details'),
     url('about',views.about_us,name='about'),
+    url('pharma',views.pharmacies,name='pharma'),
    
 ]
 if settings.DEBUG:

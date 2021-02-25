@@ -23,6 +23,11 @@ def index(request):
 def about_us(request):
     return render(request,'about.html')
 
+@login_required(login_url='/accounts/login/')
+def pharmacies(request):
+    pharmacies = Pharmacy.objects.all()
+    return render(request,'pharmacies.html',{'pharmacies':pharmacies})
+
 def registration(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)

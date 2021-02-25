@@ -1,0 +1,42 @@
+{%extends 'base.html'%}
+{% load static%}
+{% block content %}
+
+{{block.super}}
+<style>
+    .label{
+        background-image:linear-gradient(0deg, rgba(29, 27, 27, 0.58), rgba(37, 34, 34, 0.508)),url(https://images.unsplash.com/photo-1611072965169-e1534f6f300c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=752&q=80);
+        background-repeat: no-repeat;
+        background-size: cover;
+        color:white;
+        height:80vh;}
+  
+</style>
+<div class='label'><br><br>
+    <div class='container'>
+    <div class=" container row">
+        <table class='table mt-4' style='color:black;background-color:white;'>
+            <tbody>
+                <tr>
+                    <th>Name</th>
+                    <th>Location</th>
+                    <th>Insurance Partners</th>
+                    <th>Contact</th>
+                    <th>Directions</th>
+                </tr>
+                {% for pharmacy in pharmacies %}
+                <tr >
+                    <td><a href="/pharmacy/{{pharmacy.id}}" style='text-decoration: none; color:rgb(0, 0, 0)'>{{pharmacy.name}}</a></th>
+                    <td>{{pharmacy.location}}</td>
+                    <td>{{pharmacy.insurance}}</td>
+                    <td>{{pharmacy.contact}}</td>
+                    <td><a href='{{pharmacy.direction}}' target='_blank'>View on Google Map</a></td>
+                </tr>
+                {% endfor%}
+
+            </tbody>
+        </table><br><br>
+    </div>
+</div>
+
+{% endblock %}
