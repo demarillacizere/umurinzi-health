@@ -14,6 +14,7 @@
   
   
     <title>Umurinzi Health</title>
+
   </head>
   
   <body>
@@ -46,7 +47,7 @@
             </span> -->
             <!-- <h6 class="mb-0 pr-4 f-10">MENU</h6> -->
           </div>
-          <a class="navbar-brand" href="{% url 'index'%}"><b>MENU</b></a>
+          <!-- <a class="navbar-brand" href="{% url 'index'%}"><b>MENU</b></a> -->
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
             aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -54,18 +55,28 @@
           {% if user.is_authenticated %}
           <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
             <ul class="navbar-nav mr-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="{% url 'index'%}">Menu
+              <li class="nav-item active ml-4">
+                <a class="nav-link" href="{% url 'index'%}">Home
+                  <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item active ml-4">
+                <a class="nav-link" href="{% url 'about'%}">About us
+                  <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item active ml-4">
+                <a class="nav-link" href="{% url 'index'%}">Pharmacies
                   <span class="sr-only">(current)</span>
                 </a>
               </li>
   
-              <li class="nav-item dropdown">
+              <li class="nav-item dropdown ml-4">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="false">Profile
                 </a>
                 <div class="dropdown-menu dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
-                
+                  <a class="dropdown-item" href="/logout">{{request.user}}</a>
                   <a class="dropdown-item" href="/logout">Logout</a>
                 </div>
               </li>
