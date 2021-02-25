@@ -19,6 +19,10 @@ def index(request):
     }
     return render(request,'index.html',context)
 
+@login_required(login_url='/accounts/login/')
+def about_us(request):
+    return render(request,'about.html')
+
 def registration(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
