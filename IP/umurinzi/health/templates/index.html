@@ -3,34 +3,30 @@
 {% block content %}
 {% load bootstrap4 %}
 {{block.super}}
-
-<!-- <div class='container'>
-<h3>Hello...</h3>
-</div> -->
 <style>
   .banner{
-    height:80vh;
-    background-image: url(https://images.unsplash.com/photo-1584362917165-526a968579e8?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=782&q=80);
+    height:76vh;
+    background-image: linear-gradient(0deg, rgba(29, 27, 27, 0.68), rgba(37, 34, 34, 0.608)),url(https://images.unsplash.com/photo-1584362917165-526a968579e8?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=782&q=80);
     background-size: contain;
- 
-   
+  }
+  .form-control{
+    width:50%;
   }
 </style>
 <div class="banner">
     <div class="cover" >
-        <div class="container image">
-            <div class='col-md-3'></div>
+        <div class="container image ">
+            <div class='col-md-3'></div><br><br>
             <div class='col-md-6'>
-            <h2><b>UMURINZI HEALTH</b></h2><br>
             <form class="form" role="search" action="{% url 'search_results' %}">
-                  <input type="text" class="form-control col-md-6" style='z-index:1; display:inline;' placeholder="Search medication" name="drug"><br> 
-                  <label for="cars" class='m-3'>Choose your location:</label>
-                  <select name="location" id="location" class="form-select" aria-label="Default select example">
+                  <input type="text" class="form-control col-md-6" style='z-index:1; display:inline; width:50%;' placeholder="Search medication" name="drug"><br> 
+                  <label for="cars" class='m-3 text-white'>Choose your location</label>
+                  <select name="location" id="location" class="form-control" aria-label="Default select example">
                     {% for location in locations %}
                     <option value="{{location.name}}">{{location.name}}</option>
                   {% endfor %}
                 </select><br>
-                  <button type='submit' class='btn btn-default'><i class="fas fa-search"></i></button>
+                  <label class='text-center'><button type='submit' class='btn btn-default'><i class="fas fa-search"></i></button></label>
               </form>
         </div>
     </div></div>
