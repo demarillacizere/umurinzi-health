@@ -7,19 +7,19 @@
  
 </style>
 <!-- Landing Page -->
-<div class='container'>
+<div class='container' style="background-image:linear-gradient(0deg, rgba(103, 128, 151, 0.68), rgba(140, 203, 207, 0.608)),url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0HJKqlq44Gk7I_3YDsjNq5nNdQbvtyC8O_A&usqp=CAU);background-size: cover;background-repeat: no-repeat;">
     <h2><b>{{search_term|title}}</b></h2>
     <small>Found {{ drugs|length}} results</small><hr><br>
 </div>
 
 
-<div class="container wrap">
+<div class="container wrap" style="background-image:linear-gradient(0deg, rgba(103, 128, 151, 0.68), rgba(140, 203, 207, 0.608)),url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0HJKqlq44Gk7I_3YDsjNq5nNdQbvtyC8O_A&usqp=CAU); background-size: cover;background-repeat: no-repeat; height: 55vh;">
     <!-- Looping through images -->
     <div class="row">
     {% for drug in drugs %}
         <!-- displaying images -->
          <div class="col-md-6 row">
-                 <div class='col-md-6'>
+                 <div class='col-md-6 '>
                     <img src="{{drug.pic.url}}" width='100%' class="image" alt="Image" >
                  </div>
                      <div class='col-md-6' ><br>

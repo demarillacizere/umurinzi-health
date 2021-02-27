@@ -21,16 +21,16 @@
     <section>
       <!-- top navbar-->
       <div class="over-nav container-fluid px-4 py-4 c-darkgrey txt-lightgrey ">
-        <div class="d-flex justify-content-between">
+        <div class="d-inline-flex justify-content-center">
           <div class="d-flex mr-auto">
             <h6 class="mb-0 lan f-12 pb-0" style="font-family: sans-serif;"><u><strong>Umurinzi Health </strong> </u></h6>
           </div>
           {% if user.is_authenticated %}
-          <marquee behaviour="scroll" direction="left" scrollamount="10">
+          <marquee behaviour="scroll" direction="left" scrollamount="15">
             <p class="scroll" style="color: green;;font-size: 20px;">Welcome to Umurinzi Health App ,Here you can search drugs being prescribed to you.!</p>
           </marquee>
           {% else %}
-          <marquee behaviour="scroll" direction="left" scrollamount="10">
+          <marquee behaviour="scroll" direction="left" scrollamount="15">
             <p class="scroll" style="color: blue;font-size: 20px;">Sign up and log in to view available Drugs!</p>
           </marquee>
           {% endif %}
