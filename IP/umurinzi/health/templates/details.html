@@ -5,11 +5,11 @@
 {{block.super}}
 <style>
     .label{
-        background-image:linear-gradient(0deg, rgba(29, 27, 27, 0.58), rgba(37, 34, 34, 0.508)),url(https://images.unsplash.com/photo-1567427362138-e33c5022aafa?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=750&q=80);
+        background-color:rgb(187, 240, 222);
         background-repeat: no-repeat;
         background-size: cover;
 
-        color:white;
+        color:black;
 
     }
     footer{
@@ -23,7 +23,7 @@
         <div class='col-md-2'></div>
         <div class="col-md-3" >
             <div style="text-align:center">
-                <img src="{{drug.pic.url}}"  width="200px"  height="200px ">
+                <img src="{{drug.pic.url}}"  width="200px"  height="200px " style='border-radius: 50%;'>
             </div>
         </div><br>
         <div class="col-md-6 col-lg-6">
@@ -36,7 +36,8 @@
             </div>
 
         </div>
-    </div><br><br>
+    </div><br>
+    <h4 class='text-center'>Pharmacies with {{drug.name}}</h4><br>
     <table class='table' style='color:black;background-color:white;'>
         <tbody>
             <tr>
@@ -50,7 +51,7 @@
             <tr >
                 <td><a href="/pharmacy/{{pharmacy.id}}" style='text-decoration: none; color:rgb(0, 0, 0)'>{{pharmacy.name}}</a></th>
                 <td>{{pharmacy.location}}</td>
-                <td>{{pharmacy.insurance}}</td>
+                <td>{% for partner in pharmacy.insurance.all %}{{partner.name}}, {% endfor %}</td>
                 <td>{{pharmacy.contact}}</td>
                 <td><a href='{{pharmacy.direction}}' target='_blank'>View on Google Map</a></td>
             </tr>

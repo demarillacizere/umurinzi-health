@@ -54,7 +54,19 @@ def search_results(request):
             if profile.location != location:  
                 profile.location=location
                 profile.save()
-        return render(request, 'search.html',{"message":message,"drugs": searched_drugs,})
+        if searched_drugs:
+            profile = Profile.objects.get(user=request.user)
+            location = profile.location
+            drug = Drug.objects.get(id=searched_drugs.id)
+            pharmacies = drug.pharmacy.all()
+            nearest = pharmacies.filter(location=location).all()
+            others=[]
+            for pharm in pharmacies:
+                if pharm.location != location.name:
+                    others.append(pharm)
+            return render(request, 'search.html',{"message":message,"drugs": searched_drugs,"drug":drug, "pharmacies":pharmacies,"nearest":nearest,"others":others})
+        else:
+            return render(request, 'search.html',{"message":message,"drugs": searched_drugs})
 
     else:
         message = "You haven't searched for any term"
