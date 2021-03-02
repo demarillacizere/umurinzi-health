@@ -12,6 +12,9 @@
         color:black;
 
     }
+    .row{
+        grid-gap:20px;
+    }
     footer{
         position:relative;
     }
@@ -38,42 +41,37 @@
 
         </div>
     </div><br>
-    <h4 class='text-center'><b>Pharmacies with {{drug.name}}</b></h4><br>
-    <table class='table table-light table-responsive-xl'>
-        <tbody>
-            <thead class="thead-dark">
-                <tr>
-                    <th>Name</th>
-                    <th>Location</th>
-                    <th>Insurance Partners</th>
-                    <th>Contact</th>
-                    <th>Directions</th>
-                </tr>
-            </thead>
-            {% for pharmacy in nearest %}
-            <tr >
-                <td><a href="/pharmacy/{{pharmacy.id}}" style='text-decoration: none; color:rgb(0, 0, 0)'>{{pharmacy.name}}</a></th>
-                <td>{{pharmacy.location}}</td>
-                <td>{% for partner in pharmacy.insurance.all %}{{partner.name}}, {% endfor %}</td>
-                <td>{{pharmacy.contact}}</td>
-                <td><a href='{{pharmacy.direction}}' target='_blank'>View on Google Map</a></td>
-            </tr>
+    <h4 class='text-center'><br>
+    {% if nearest %}
+    <h5 class='text-center'><b>Pharmacies with {{drug.name}} near you</b></h5><br>
+    <div class='row justify-content-center'>
+      
+        {% for pharmacy in nearest %}
+        <div class='col-lg-3 card text-center'>
+            <div class='card-body'>
+                <h4><b>{{pharmacy.name}}</b></h4><br>
+                <span>Located at {{pharmacy.location}}</span><br><br>
+                <a href='/pharmacy/{{pharmacy.id}}' class='btn btn-info'> View Details</a>
+            </div>
+        </div>
+        {% endfor%}
+    </div>
+    {% endif %}<br>
+    <h5 class='text-center'><b>Other Pharmacies with {{drug.name}}</b></h5><br>
+    <div class='row justify-content-center'>
+        {% for pharmacy in others %}
+            <div class='col-lg-3 card text-center'>
+                <div class='card-body'>
+                    <h4><b>{{pharmacy.name}}</b></h4><br>
+                    <span>Located at {{pharmacy.location}}</span><br><br>
+                    <a href='/pharmacy/{{pharmacy.id}}' class='btn btn-info'> View Details</a>
+                </div>
+                </div>
             {% endfor%}
-            {% for pharmacy in others %}
-            <tr >
-                <td><a href="/pharmacy/{{pharmacy.id}}" style='text-decoration: none; color:black'>{{pharmacy.name}}</a></th>
-                <td>{{pharmacy.location}}</td>
-                <td>{% for partner in pharmacy.insurance.all %}{{partner.name}}, {% endfor %}</td>
-                <td>{{pharmacy.contact}}</td>
-                <td><a href='{{pharmacy.direction}}' target='_blank'>View on Google Map</a></td>
-            </tr>
-            {% endfor%}
-        </tbody>
-    </table><br><br>
+    </div><br><br><br><br>
     {%else%}
     <h4>No results found for {{message}}</h4>
     {% endif %}
 </div>
 </div>
-
 {% endblock %}

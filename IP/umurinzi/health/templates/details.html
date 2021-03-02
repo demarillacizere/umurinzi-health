@@ -38,35 +38,24 @@
         </div>
     </div><br>
     <h4 class='text-center'>Pharmacies with {{drug.name}}</h4><br>
-    <table class='table' style='color:black;background-color:white;'>
-        <tbody>
-            <tr>
-                <th>Name</th>
-                <th>Location</th>
-                <th>Insurance Partners</th>
-                <th>Contact</th>
-                <th>Directions</th>
-            </tr>
             {% for pharmacy in nearest %}
-            <tr >
-                <td><a href="/pharmacy/{{pharmacy.id}}" style='text-decoration: none; color:rgb(0, 0, 0)'>{{pharmacy.name}}</a></th>
-                <td>{{pharmacy.location}}</td>
-                <td>{% for partner in pharmacy.insurance.all %}{{partner.name}}, {% endfor %}</td>
-                <td>{{pharmacy.contact}}</td>
-                <td><a href='{{pharmacy.direction}}' target='_blank'>View on Google Map</a></td>
-            </tr>
+            <div class='col-lg-3 card text-center'>
+                <div class='card-body'>
+                    <h4><b>{{pharmacy.name}}</b></h4><br>
+                    <span>Located at {{pharmacy.location}}</span><br><br>
+                    <a href='/pharmacy/{{pharmacy.id}}' class='btn btn-info'> View Details</a>
+                </div>
+                </div>
             {% endfor%}
             {% for pharmacy in others %}
-            <tr >
-                <td><a href="/pharmacy/{{pharmacy.id}}" style='text-decoration: none; color:black'>{{pharmacy.name}}</a></th>
-                <td>{{pharmacy.location}}</td>
-                <td>{{pharmacy.insurance}}</td>
-                <td>{{pharmacy.contact}}</td>
-                <td><a href='{{pharmacy.direction}}' target='_blank'>View on Google Map</a></td>
-            </tr>
-            {% endfor%}
-        </tbody>
-    </table><br><br>
+            <div class='col-lg-3 card text-center'>
+                <div class='card-body'>
+                    <h4><b>{{pharmacy.name}}</b></h4><br>
+                    <span>Located at {{pharmacy.location}}</span><br><br>
+                    <a href='/pharmacy/{{pharmacy.id}}' class='btn btn-info'> View Details</a>
+                </div>
+                </div>
+            {% endfor%}<br><br>
 </div>
 </div>
 

@@ -27,6 +27,12 @@ def about_us(request):
 def pharmacies(request):
     pharmacies = Pharmacy.objects.all()
     return render(request,'pharmacies.html',{'pharmacies':pharmacies})
+    
+@login_required(login_url='/accounts/login/') 
+def pharm_details(request,pharm_id):
+    pharm=Pharmacy.objects.get(id=pharm_id)
+    print(pharm.name)
+    return render(request,"pharmacy.html",{"pharm":pharm})
 
 def registration(request):
     if request.method == 'POST':
@@ -72,16 +78,3 @@ def search_results(request):
         message = "You haven't searched for any term"
         return render(request, 'search.html',{"message":message})
 
-@login_required(login_url='/accounts/login/') 
-def get_details(request,drugs_id):
-    profile = Profile.objects.get(user=request.user)
-    location = profile.location
-    drug = Drug.objects.get(id=drugs_id)
-    pharmacies = drug.pharmacy.all()
-    nearest = pharmacies.filter(location=location).all()
-    others=[]
-    for pharm in pharmacies:
-        if pharm.location != location.name:
-            others.append(pharm)
-    
-    return render(request,"details.html",{"drug":drug, "pharmacies":pharmacies,"nearest":nearest,"others":others,})

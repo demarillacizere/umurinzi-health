@@ -1,0 +1,18 @@
+{%extends 'base.html'%}
+{% load static%}
+{% block content %}
+
+{{block.super}}
+
+<div class='container'>
+    <div class='card p-4'>
+        <h3>{{pharm.name}}</h3><br>
+        <h5><i class="fas fa-phone fa-rotate-90"></i> {{pharm.contact}}</h5>
+        <h5><i class="fas fa-map-marker-alt"></i> {{pharm.location}}</h5>
+        <h5>Insurance partners: {% for partner in pharm.insurance.all %}{{partner.name}}, {% endfor %}</h5>
+    </div><br><br>
+    <iframe src="{{pharm.direction}}" width="500" height="350" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+
+{%endblock%}
+
+https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3987.4830610381878!2d30.106912450548407!3d-1.9604230985637596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19dca6544e2169c7%3A0xac66a6dc7299e61b!2sVine%20Pharmacy%2C%20Kisimenti!5e0!3m2!1sen!2srw!4v1614718252226!5m2!1sen!2srw
