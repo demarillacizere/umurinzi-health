@@ -3,46 +3,77 @@
 {% block content %}
 
 {{block.super}}
-<style>
- 
+ <style>
+    .label{
+        background-color:rgb(187, 240, 222);
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        color:black;
+
+    }
+    footer{
+        position:relative;
+    }
+  
 </style>
-<!-- Landing Page -->
-<div class='container' style="background-image:linear-gradient(0deg, rgba(103, 128, 151, 0.68), rgba(140, 203, 207, 0.608)),url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0HJKqlq44Gk7I_3YDsjNq5nNdQbvtyC8O_A&usqp=CAU);background-size: cover;background-repeat: no-repeat;">
-    <h2><b>{{search_term|title}}</b></h2>
-    <small>Found {{ drugs|length}} results</small><hr><br>
+<div class='label'><br><br>
+    <div class='container'>
+    <div class=" container row">
+        <div class='col-md-2'></div>
+        {% if drug %}
+        <div class="col-md-3" >
+            <div style="text-align:center">
+                <img src="{{drug.pic.url}}"  width="200px"  height="200px " style='border-radius: 50%;'>
+            </div>
+        </div><br>
+        <div class="col-md-6 col-lg-6">
+            <div class="card-1" ><br>
+                <div class="card-text" style="padding: 20px;">
+                    <h5><strong>Name:</strong> {{drug.name}}</h5>
+                    <h5><strong>Description:</strong> {{drug.description}}</h5>
+                </div>
+
+            </div>
+
+        </div>
+    </div><br>
+    <h4 class='text-center'><b>Pharmacies with {{drug.name}}</b></h4><br>
+    <table class='table table-light table-responsive-xl'>
+        <tbody>
+            <thead class="thead-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Location</th>
+                    <th>Insurance Partners</th>
+                    <th>Contact</th>
+                    <th>Directions</th>
+                </tr>
+            </thead>
+            {% for pharmacy in nearest %}
+            <tr >
+                <td><a href="/pharmacy/{{pharmacy.id}}" style='text-decoration: none; color:rgb(0, 0, 0)'>{{pharmacy.name}}</a></th>
+                <td>{{pharmacy.location}}</td>
+                <td>{% for partner in pharmacy.insurance.all %}{{partner.name}}, {% endfor %}</td>
+                <td>{{pharmacy.contact}}</td>
+                <td><a href='{{pharmacy.direction}}' target='_blank'>View on Google Map</a></td>
+            </tr>
+            {% endfor%}
+            {% for pharmacy in others %}
+            <tr >
+                <td><a href="/pharmacy/{{pharmacy.id}}" style='text-decoration: none; color:black'>{{pharmacy.name}}</a></th>
+                <td>{{pharmacy.location}}</td>
+                <td>{% for partner in pharmacy.insurance.all %}{{partner.name}}, {% endfor %}</td>
+                <td>{{pharmacy.contact}}</td>
+                <td><a href='{{pharmacy.direction}}' target='_blank'>View on Google Map</a></td>
+            </tr>
+            {% endfor%}
+        </tbody>
+    </table><br><br>
+    {%else%}
+    <h4>No results found for {{message}}</h4>
+    {% endif %}
 </div>
-
-
-<div class="container wrap" style="background-image:linear-gradient(0deg, rgba(103, 128, 151, 0.68), rgba(140, 203, 207, 0.608)),url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0HJKqlq44Gk7I_3YDsjNq5nNdQbvtyC8O_A&usqp=CAU); background-size: cover;background-repeat: no-repeat; height: 55vh;">
-    <!-- Looping through images -->
-    <div class="row">
-    {% for drug in drugs %}
-        <!-- displaying images -->
-         <div class="col-md-6 row">
-                 <div class='col-md-6 '>
-                    <img src="{{drug.pic.url}}" width='100%' class="image" alt="Image" >
-                 </div>
-                     <div class='col-md-6' ><br>
-                         <a href='/drug/{{drug.id}}' style='text-decoration: none; color:black;'>
-                             
-                             <div class="overlay">
-                                 <h4>{{drug.name}}</h4>
-                             </div>
-                         </a>
-                     </div>
-             </div>
-    {% empty %}
-        <div class="col-sm-6 col-md-6 col-lg-6 no-result">
-            <img src="https://unsplash.com/a/img/empty-states/photos.png" width='100%' alt="">
-        </div>
-        <div class="col-sm-6 col-md-6 col-lg-6">
-            <h4 class="text-center"> Sorry, no drugs found for <b>{{search_term}}</b> term</h4>
-        </div>
-    {% endfor %}
-    </div>
-    
-
-    
 </div>
 
 {% endblock %}

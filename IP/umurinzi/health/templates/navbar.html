@@ -20,7 +20,7 @@
   <body>
     <section>
       <!-- top navbar-->
-      <div class="over-nav container-fluid px-4 py-4 c-darkgrey txt-lightgrey ">
+      <!-- <div class="over-nav container-fluid px-4 py-4 c-darkgrey txt-lightgrey ">
         <div class="d-inline-flex justify-content-center">
           <div class="d-flex mr-auto">
             <h6 class="mb-0 lan f-12 pb-0" style="font-family: sans-serif;"><u><strong>Umurinzi Health </strong> </u></h6>
@@ -37,10 +37,11 @@
           <div class="d-flex ml-auto">
           </div>
         </div>
-      </div>
+      </div> -->
   
-      <nav class="mb-1 navbar navbar-expand-lg navbar-dark bg-info">
-        <div class="container-fluid px-0 d nav-border text-white-50">
+      <nav class="mb-1 navbar navbar-expand-lg navbar-dark" style='padding:0px; font-weight:bold; background-color: rgba(6, 15, 32, 0.959);color:black;'>
+        <div class="container-fluid px-0 d nav-border ">
+          <img src='/media/pictures/logo1.png' width='100px' >
           <div id="menu-toogle" class="d-flex align-items-center w-25 pl-4">
             <!-- <span class="mr-2">
               <img id="img-icon" src="{% static 'images/icon.png' %}" style="width: 50px; height: 50px;">
@@ -71,9 +72,9 @@
                 </a>
               </li>
   
-              <li class="nav-item dropdown ml-4">
+              <li class="nav-item active dropdown ml-4">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">Profile
+                  aria-haspopup="true" aria-expanded="false">Profile<span class="sr-only">(current)</span>
                 </a>
                 <div class="dropdown-menu dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
                   <a class="dropdown-item" href="/logout">{{request.user}}</a>
