@@ -8,38 +8,26 @@
         background-image:linear-gradient(0deg, rgba(29, 27, 27, 0.58), rgba(37, 34, 34, 0.508)),url(https://images.unsplash.com/photo-1611072965169-e1534f6f300c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=752&q=80);
         background-repeat: no-repeat;
         background-size: cover;
-        color:white;
         height:100vh;}
+        .row{
+            grid-gap:30px;
+        }
   
 </style>
 <div class='label'><br><br>
     <div class='container'>
-    <div class=" container row">
-        <table class='table mt-4 table-light table-responsive-xl'>
-            <tbody>
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Name</th>
-                        <th>Location</th>
-                        <th>Insurance Partners</th>
-                        <th>Contact</th>
-                        <th>Directions</th>
-                    </tr>
-                </thead>
-                
-                {% for pharmacy in pharmacies %}
-                <tr >
-                    <td><a href="/pharmacy/{{pharmacy.id}}" style='text-decoration: none; color:rgb(0, 0, 0)'>{{pharmacy.name}}</a></th>
-                    <td>{{pharmacy.location}}</td>
-                    <td>{% for partner in pharmacy.insurance.all %}{{partner.name}}, {% endfor %}</td>
-                    <td>{{pharmacy.contact}}</td>
-                    <td><a href='{{pharmacy.direction}}' target='_blank'>View on Google Map</a></td>
-                </tr>
-                {% endfor%}
-
-            </tbody>
-        </table><br><br>
+    <div class=" container row justify-content-center">
+        {% for pharmacy in pharmacies %}
+        <div class='col-lg-3 card text-center'>
+            <div class='card-body'>
+                <h4><b>{{pharmacy.name}}</b></h4><br>
+                <span>Located at {{pharmacy.location}}</span><br><br>
+                <a href='/pharmacy/{{pharmacy.id}}' class='btn btn-info'> View Details</a>
+            </div>
+            </div>
+        {% endfor%}
     </div>
+    
 </div>
 
 {% endblock %}

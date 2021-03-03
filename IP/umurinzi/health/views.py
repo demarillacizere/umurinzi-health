@@ -27,6 +27,12 @@ def about_us(request):
 def pharmacies(request):
     pharmacies = Pharmacy.objects.all()
     return render(request,'pharmacies.html',{'pharmacies':pharmacies})
+    
+@login_required(login_url='/accounts/login/') 
+def pharm_details(request,pharm_id):
+    pharm=Pharmacy.objects.get(id=pharm_id)
+    print(pharm.name)
+    return render(request,"pharmacy.html",{"pharm":pharm})
 
 def registration(request):
     if request.method == 'POST':
