@@ -12,17 +12,18 @@
     <div class="row">
         <div class="col-lg-6" >
             <div style="text-align:center">
-                <img src="{{profile.profile_pic.url}}"  alt="profile_pic" width="200px"  height="200px " style="border-radius: 50%;">
+                <img src="/media/{{profile.profile_pic}}"  alt="profile_pic" width="200px"  height="200px " style="border-radius: 50%;">
             </div><br><br>
         </div><br>
         <div class="col-md-6 col-lg-6">
             <div class="card-1">
+                <img src="{{profile.profile_pic.url}}">
                 <div class="card-text " style="padding: 20px;">
-                    <h5><strong>First Name:</strong>{{request.user.profile.first_name}}</h5>
-                    <h5><strong>Last Name:</strong>{{request.user.profile.last_name}}</h5>
-                    <h5><strong> Username:</strong> {{request.user.profile.user}}</h5>
-                    <h5><strong>Email:</strong> {{request.user.profile.email}}</h5>
-                    <h5><strong>Location:</strong>{{request.user.profile.location}}</h5>
+                    <h5><strong>First Name:</strong>{{profile.first_name}}</h5>
+                    <h5><strong>Last Name:</strong>{{profile.last_name}}</h5>
+                    <h5><strong> Username:</strong> {{profile.user}}</h5>
+                    <h5><strong>Email:</strong> {{profile.email}}</h5>
+                    <h5><strong>Location:</strong>{{profile.location}}</h5>
                     
                 <a class="btn btn-default text-center" onclick="toggleFunc()" style="border-radius: 25px; color:white;"target="_blank">Edit Profile</a><br><br>
             </div>
