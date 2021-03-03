@@ -85,3 +85,46 @@ def get_details(request,drugs_id):
             others.append(pharm)
     
     return render(request,"details.html",{"drug":drug, "pharmacies":pharmacies,"nearest":nearest,"others":others,})
+
+@login_required(login_url='/accounts/login/')
+def profile(request):
+    user = request.user
+    profile = Profile.objects.get(user=user)
+    print(profile.user)
+    form=ProfileUpdateForm(instance=profile)
+    
+    if request.method == 'POST':
+        form = ProfileUpdateForm(request.POST, request.FILES,instance=profile)
+        if form.is_valid():
+            form.save()
+    context={
+        'form':form,
+        'profile':profile,
+    }
+    return render(request,"profile/profile.html",context=context)
+
+@login_required(login_url='/accounts/login/')
+def updateprofile(request):
+    # products = Products.objects.all()
+    user = request.user
+    profile = Profile.objects.get(user=user)
+    if request.method == 'POST':
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, f'Your account has been successfully updated')
+            return redirect('profile')
+    else:
+        user_form = UserUpdateForm(instance=request.user)
+        profile_form = ProfileUpdateForm(instance=request.user.profile)
+
+    context = {
+    'user_form':user_form,
+    'profile_form':profile_form,
+    'profile':profile,
+    'user':user,
+    }
+
+    return render(request, 'profile/update_profile.html', context)
