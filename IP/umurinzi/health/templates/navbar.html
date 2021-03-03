@@ -77,7 +77,7 @@
                   aria-haspopup="true" aria-expanded="false">Profile<span class="sr-only">(current)</span>
                 </a>
                 <div class="dropdown-menu dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
-                  <a class="dropdown-item" href="/logout">{{request.user}}</a>
+                  <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
                   <a class="dropdown-item" href="/logout">Logout</a>
                 </div>
               </li>
