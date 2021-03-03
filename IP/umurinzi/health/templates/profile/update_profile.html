@@ -1,0 +1,30 @@
+{% extends 'base.html'%}
+{% load bootstrap4 %}
+
+{% block content %}
+  <div class="container content pt-5">
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6 mt-5">
+        <div class="card">
+          <div class="card-body">
+            <div class="card bg- pl-3 pr-3 text-black">
+              <form  method="post" id="exampleModalCenter" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                  <legend class="border-bottom mb-4 text-center text-black mt-5">Update Profile</legend>
+            {% bootstrap_form user_form %}
+            {% bootstrap_form profile_form %}
+                </div>
+                <div class="form-group">
+                  <input type="submit" class="btn btn-outline-info w-100 pl-2 pr-2"  value="Update">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+  </div>
+{% endblock %}

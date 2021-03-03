@@ -15,3 +15,8 @@ class LocationForm(forms.ModelForm):
         model = Profile
         exclude = ['user', 'first_name','last_name','email','profile_pic']
         location=  forms.ModelChoiceField(queryset=Location.objects.all())
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        exclude = ['user','email']

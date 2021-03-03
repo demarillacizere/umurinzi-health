@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    h4{
+        text-align:left;
+    }
+    .container{
+        margin-top: 80px;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6" >
+            <div style="text-align:center">
+                <img src="{{profile.profile_pic.url}}"  alt="profile_pic" width="200px"  height="200px " style="border-radius: 50%;">
+            </div><br><br>
+        </div><br>
+        <div class="col-md-6 col-lg-6">
+            <div class="card-1">
+                <div class="card-text " style="padding: 20px;">
+                    <h5><strong>First Name:</strong>{{request.user.profile.first_name}}</h5>
+                    <h5><strong>Last Name:</strong>{{request.user.profile.last_name}}</h5>
+                    <h5><strong> Username:</strong> {{request.user.profile.user}}</h5>
+                    <h5><strong>Email:</strong> {{request.user.profile.email}}</h5>
+                    <h5><strong>Location:</strong>{{request.user.profile.location}}</h5>
+                    
+                <a class="btn btn-default text-center" onclick="toggleFunc()" style="border-radius: 25px; color:white;"target="_blank">Edit Profile</a><br><br>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div id='form' style='display: none; text-align:center;' >
+        <div class="card-text" style="padding: 0;">
+            {{form.media}}
+            <form  action="/my_profile" method="post" enctype="multipart/form-data">
+                {%csrf_token%}
+                {{form.as_p}}
+                <input type="submit" class="btn btn-sm btn-default" value="update">
+            </form>
+        </div>
+    </div>
+</div><br><br>
+<script>
+    function toggleFunc() {
+    var x = document.getElementById("form");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }
+</script>
+{%endblock%}

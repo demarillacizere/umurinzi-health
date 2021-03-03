@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Q
+from django.db.models.signals import post_save
 import datetime as dt
 
 class Location(models.Model):
@@ -88,4 +89,17 @@ class Profile(models.Model):
         self.delete()
 
     def __str__(self):
-        return self.user.username
+        return f'{self.user.username} Profile'
+
+    class Meta:
+        db_table = 'profile'
+
+    # @receiver(post_save, sender=User)
+    def update_create_profile(sender,instance,created, **kwargs):
+        if created:
+            Profile.objects.create(user=instance)
+        instance.profile.save()
+
+
+    def save_profile(self):
+        self.save()
