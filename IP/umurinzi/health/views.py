@@ -75,8 +75,7 @@ def search_results(request):
             return render(request, 'search.html',{"message":message,"drugs": searched_drugs})
 
     else:
-        message = "You haven't searched for any term"
-        return render(request, 'search.html',{"message":message})
+        return render(request, 'search.html')
 
 @login_required(login_url='/accounts/login/') 
 def get_details(request,drugs_id):

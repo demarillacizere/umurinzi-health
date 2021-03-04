@@ -4,30 +4,42 @@
 
 {{block.super}}
 <style>
-    .label{
-        background-image:linear-gradient(0deg, rgba(29, 27, 27, 0.58), rgba(37, 34, 34, 0.508)),url(https://images.unsplash.com/photo-1611072965169-e1534f6f300c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=752&q=80);
-        background-repeat: no-repeat;
-        background-size: cover;
-        height:100vh;}
         .row{
             grid-gap:30px;
         }
+        body{
+        font-weight:bolder;
+        background-color: skyblue;
+        font-family: 'Vollkorn', serif;}
+
+        .card{
+        font-weight: normal;
+        border-radius:20px;
+        padding: 0;
+        color:#562B0C;
+    }
+    .card-body{
+        background-color: azure;
+    }
+    .btn{
+        background-color: skyblue;
+    }
   
 </style>
 <div class='label'><br><br>
     <div class='container'>
-    <div class=" container row">
+    <div class=" container row mb-3">
         {% for pharmacy in pharmacies %}
         <div class='col-lg-3 card text-center'>
+            <img class="card-img-top" src="https://media.sciencephoto.com/image/m6400280/800wm" width='100%' alt="Card image">
             <div class='card-body'>
                 <h4><b>{{pharmacy.name}}</b></h4><br>
                 <span>Located at {{pharmacy.location}}</span><br><br>
-                <a href='/pharmacy/{{pharmacy.id}}' class='btn btn-info'> View Details</a>
+                <a href='/pharmacy/{{pharmacy.id}}' class='btn'> View Details</a>
             </div>
-            </div>
+        </div>
         {% endfor%}
     </div>
     
-</div>
-
+</div></div>
 {% endblock %}

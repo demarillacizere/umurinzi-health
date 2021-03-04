@@ -67,7 +67,7 @@ class Drug(models.Model):
 
     @classmethod
     def search(cls,searchterm):
-        search = Drug.objects.filter(Q(name__icontains=searchterm)|Q(description__icontains=searchterm)).first()
+        search = Drug.objects.filter(Q(name__icontains=searchterm)).first()
         return search
 
     def __str__(self):

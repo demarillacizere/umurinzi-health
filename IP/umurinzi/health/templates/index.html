@@ -4,21 +4,42 @@
 {% load bootstrap4 %}
 {{block.super}}
 <style>
-  .banner{
-    height:100vh;
-    background-image:linear-gradient(0deg, rgba(29, 27, 27, 0.28), rgba(37, 34, 34, 0.28)), url(https://media.gettyimages.com/videos/use-the-best-tools-to-offer-you-the-best-care-video-id1140561549?s=640x640);
-    background-size: cover;
-    color:black;
+  body{
+    background-image:linear-gradient(to right, rgba(24, 24, 24, 0.3), rgba(24, 23, 23, 0.3)), url('https://pharmacyconnection.ca/wp-content/uploads/2018/01/disposal_medication.jpg');
     background-repeat:no-repeat;
-    font-family: 'Akaya Telivigala', cursive;
-    font-size: 28px;
+    background-size:cover;
+    height:100vh;
+    
+  }
+  .banner{
+    margin-top:7%;
+    display: flex;
+    text-align: center;
+    color:white;
+    align-items: center;
+    text-align:center;
+    font-family: 'Vollkorn', serif;
+  }
+  .banner a{
+    color:white;
+    font-weight:bold;
   }
   .form-control{
     width:50%;
+    border-radius:15px;
   }
-  
+  select{
+    margin:0 auto
+  }
+  h1{
+    font-size:60px;
+  }
+  .cover{
+    margin:0 auto;
+    width:100%;
+  }
 </style>
-<div class="banner">
+<!-- <div class="banner">
     <div class="cover" >
         <div class="container image row " >
           
@@ -37,22 +58,27 @@
               </form>
         </div>
     </div></div>
-</div>
-
-<!--     
-<div class='container'> 
-
 </div> -->
 
-<script>
-    function copyURL(value){
-      function handler(event){
-        event.clipboardData.setData('text/plain',value);
-        event.preventDefault();
-        document.removeEventListener('copy',handler, true);
-      }
-      document.addEventListener('copy', handler, true);
-      document.execCommand('copy');
-    }
-    </script>
+<div class="banner">
+  <div class="cover">
+      <div class="container image">
+          <div>
+          <h1 id="category"><b>Umurinzi Health</b></h1><br>
+          <form class="form" role="search" action="{% url 'search_results' %}" >
+            <input type="text" class="form-control m-3" style='z-index:1; display:inline;' placeholder="Search medication" name="drug"><br>
+            <label for='location'><h5><b>Choose your location</b></h5></label>
+            <select name="location" id="location" class="form-control" aria-label="Default select example">
+              {% for location in locations %}
+              <option value="{{location.name}}">{{location.name}}</option>
+            {% endfor %}
+          </select><br>
+          <label class='text-center'><button type='submit' class='btn btn-default'><i class="fas fa-search"> Search</i></button></label>
+            </form>
+            <br><br><br>
+            
+      </div>
+  </div></div>
+</div><br><br>
+
 {%endblock%}

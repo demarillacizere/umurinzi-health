@@ -3,16 +3,35 @@
 {% block content %}
 
 {{block.super}}
+<style>
+    body{
+        background-image:linear-gradient(to right, rgba(24, 24, 24, 0.3), rgba(24, 23, 23, 0.3)),url('https://images.pexels.com/photos/3683085/pexels-photo-3683085.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
+        background-size:cover;
+        background-repeat:no-repeat;
+        height:100vh;
 
+    font-family: 'Vollkorn', serif;
+    }
+    .container{
+        display:flex;
+        flex-direction:row;
+        align-items: center;
+        margin-top:80px;
+
+    }
+</style>
 <div class='container'>
-    <div class='card p-4'>
-        <h3>{{pharm.name}}</h3><br>
-        <h5><i class="fas fa-phone fa-rotate-90"></i> {{pharm.contact}}</h5>
-        <h5><i class="fas fa-map-marker-alt"></i> {{pharm.location}}</h5>
-        <h5>Insurance partners: {% for partner in pharm.insurance.all %}{{partner.name}}, {% endfor %}</h5>
-    </div><br><br>
-    <iframe src="{{pharm.direction}}" width="500" height="350" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    <div class="row">
+        <div class='card p-4 col-md-6'>
+            <h4><b><u>{{pharm.name}}</u></b></h4><br>
+            <h5><b>Contact:</b> {{pharm.contact}}</h5>
+            <h5><b>Location:</b>{{pharm.location}}</h5>
+            <h5><b>Insurance partners:</b> {% for partner in pharm.insurance.all %}{{partner.name}}, {% endfor %}</h5>
+        </div>
+        <div class="col-md-6">
+            <iframe src="{{pharm.direction}}" width="500" height="350" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
 
+        </div>
+    </div></div>
+      
 {%endblock%}
-
-https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3987.4830610381878!2d30.106912450548407!3d-1.9604230985637596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19dca6544e2169c7%3A0xac66a6dc7299e61b!2sVine%20Pharmacy%2C%20Kisimenti!5e0!3m2!1sen!2srw!4v1614718252226!5m2!1sen!2srw
