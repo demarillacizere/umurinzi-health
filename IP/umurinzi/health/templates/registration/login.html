@@ -2,21 +2,30 @@
 {% load bootstrap4 %}
 {% load static%}
 {% block content %}
+<style>
+  body{
+        background-image:url('https://images.ctfassets.net/ut7rzv8yehpf/2Y1g3AC91inxe7AKe0xjYz/2dd03fa080bbd6f83ad126a27959d073/medications_and_blood_sugar.jpeg?w=1800&fl=progressive&q=50');
+        background-repeat:no-repeat;
+        background-size:cover;
+    }
+    .container{
+
+        color:#562B0C;
+    }
+</style>
 <div class="container">
-  <br>
+  <br><br><br>
   <div class="row">
     
-    <div class="col-md-6">
-      <img src="{% static 'images/health app.png' %}" width="450" height="450" >
-
-  </div>
-    <div class="col-md-4">
+    <div class="col-md-7">
+  </div><br><br>
+    <div class="col-md-4 mt-5">
       {% if form.errors %}
       <p> Password or Username is incorrect </p>
       {% endif %}
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="text-center" style='color:blue;'><b>Log In</b></h3>
+          <h3 class="text-center" style='color:#562B0C;'><b>Log In</b></h3>
         </div>
         <div class="panel-body">
           <form action="/accounts/login/" method="post">
@@ -30,7 +39,7 @@
         </div>
       </div>
       
-      <p>Don't have an account?? <a id="sign" href="/accounts/register/"> Sign up</a></p>
+      <p>Don't have an account?? <a id="sign" class='text-info' href="/accounts/register/"> Sign up</a></p>
     </div>
 
     <div class="col-md-4"></div>

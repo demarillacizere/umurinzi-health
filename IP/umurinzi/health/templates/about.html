@@ -2,30 +2,32 @@
 {% extends 'base.html'%}
 {% block content%}
 <style>
-    .container{
+    body{
         font-family: 'Akaya Telivigala', cursive;
-        font-size: 22px;
-        background-color:rgb(187, 240, 222);
+        background-color:rgb(240, 232, 232);
+    }
+    .col-md-5{
+        font-size:22px;
+        color:#562B0C;
     }
 </style>
-<div class="container mid">
+<div class="container">
     <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@200&display=swap" rel="stylesheet" style="font-family: 'Yanone Kaffeesatz', sans-serif;">
     <div class="row mt-5">
-        <div class="col-md-7"><br>
-            <img src="https://wallpaperaccess.com/full/4204887.jpg"
+        <div class="col-md-6"><br>
+            <img src="https://media3.s-nbcnews.com/i/newscms/2019_26/2908366/190624-culturally-competent-care-5-khn-ew-405p_6b0d52b19711f334849054dccf6a7768.jpg"
             class="img-fluid" alt="illustration" style="border-radius:30%;" ><br>
         </div><br>
-        <div class="col-md-4">
+        <div class="col-md-5">
             <h3 class="about"><i class=""></i></h3>
             <br><br>
             <p> 
-                Umurinzi health  located in Kigali - Rwanda. We connect customers  to the nearest pharmacy where they get medication in addition to general healthcare advice. umurinzi is a partner  of differnt pharmacy in kigaki, and we plan on partnering with all the major medical sectors in the near future
-                 </p>
-            <p>Umurinzi Health.</p><br><br>
+                "We connect customers  to the nearest pharmacy where they get medication in addition to general healthcare advice. Umurinzi is a partner of different pharmacies in Kigali, and we plan on partnering with all the pharmacies from all around the country".
+                Umurinzi Health.</p>
         </div>
     </div>
-    <p></p>
-    <h1></h1>
-</div>
+</div><br><br>
+{% include 'footer.html' %}
 {%endblock%}
+
