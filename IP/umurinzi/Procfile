@@ -1,0 +1,1 @@
+web: gunicorn umurinzi.wsgi --log-file -
